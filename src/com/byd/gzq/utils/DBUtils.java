@@ -24,6 +24,7 @@ public class DBUtils {
                         if(rs.next()){
                             System.out.println("success " + cnt+"\t"+rs.getString(1));
                         }
+                        DBUtils.closeConnection(connection);
                         System.out.println(DBUtils.getActive());
                         Thread.sleep(500);
                         j.incr("cnt");
@@ -75,5 +76,14 @@ public class DBUtils {
 
     public static int getActive(){
         return basicDataSource.getNumActive();
+    }
+
+
+    public static void closeDatasource(){
+        try {
+            basicDataSource.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

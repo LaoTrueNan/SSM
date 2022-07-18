@@ -25,7 +25,7 @@ public class CityServlet extends BaseServlet{
             }
         }
         if(city==null){
-            city = this.ioc.getBean("city",City.class);
+            city = ioc.getBean("city",City.class);
         }
         req.setAttribute("city",city);
         try {

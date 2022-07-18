@@ -2,6 +2,7 @@ package com.byd.gzq.servlet;
 
 import com.byd.gzq.listener.GlobalListener;
 import com.byd.gzq.utils.CommonUtils;
+import com.byd.gzq.utils.DBUtils;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletConfig;
@@ -69,7 +70,7 @@ public class BaseServlet extends HttpServlet{
     @Override
     public void init(ServletConfig config) throws ServletException {
         //fixme 向所有的servlet中添加ApplicationContext对象
-        this.ioc = GlobalListener.getIoc();
+        ioc = GlobalListener.getIoc();
         super.init(config);
     }
 }

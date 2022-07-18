@@ -1,6 +1,11 @@
 package com.byd.gzq.listener;
 
 import com.byd.gzq.bean.City;
+import com.byd.gzq.servlet.BaseServlet;
+import com.byd.gzq.utils.DBUtils;
+import com.byd.gzq.utils.RedisUtils;
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -22,6 +27,7 @@ public class GlobalListener extends ContextLoaderListener{
         ApplicationContext context =
                 WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext());
         ioc = context;
+
     }
 
     @Override
@@ -34,6 +40,9 @@ public class GlobalListener extends ContextLoaderListener{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        AbandonedConnectionCleanupThread.checkedShutdown();
+//        DBUtils.closeDatasource();
+//        RedisUtils.closeRedisConn(null);
         System.out.println("销毁。。。");
     }
 

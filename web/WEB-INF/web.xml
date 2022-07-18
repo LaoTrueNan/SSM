@@ -40,4 +40,12 @@
         <servlet-name>cityServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <filter>
+        <filter-name>commonFilter</filter-name>
+        <filter-class>com.byd.gzq.filter.CommonFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>commonFilter</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
 </web-app>
