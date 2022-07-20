@@ -1,5 +1,6 @@
 package com.byd.gzq.bean;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +10,14 @@ public class City {
     private String name;
     private String countryCode;
     private String district;
+
+    @Autowired
+    private Person person;
     private Integer population;
 
-    public City(){}
+    public City(){
+
+    }
 
     public City(Integer id, String name, String countryCode, String district, Integer population) {
         this.id = id;
