@@ -7,11 +7,7 @@
 --%>
 <% int i = new Random().nextInt(10); %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>SSM</title>
-</head>
-<body>
+<%@include file="head.jsp"%>
 <a href="retrieveCity?cid=2">到Kabul</a>
 <a href="retrieveCity?cid=1">到Taiyuan</a>
 <a href="retrieveCity?cid=<%=i%>">random</a>

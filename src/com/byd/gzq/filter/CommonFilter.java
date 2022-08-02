@@ -21,7 +21,6 @@ public class CommonFilter extends HttpFilter {
      */
     protected void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
         req.setCharacterEncoding("UTF-8");
-
         chain.doFilter(req,resp);
     }
 }

@@ -11,7 +11,7 @@
     <title>404</title>
 </head>
 <body>
-  <h1>404 not found</h1>
+  <h1>404 not found :(</h1>
   <h2>check your request target:<%=request.getAttribute("url").toString()%></h2>
 </body>
 </html>

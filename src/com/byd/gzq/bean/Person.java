@@ -1,6 +1,7 @@
 package com.byd.gzq.bean;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class Person {
     private String name;
@@ -23,5 +24,13 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", city=" + city +
+                '}';
     }
 }

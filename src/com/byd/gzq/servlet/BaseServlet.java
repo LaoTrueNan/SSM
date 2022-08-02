@@ -1,9 +1,12 @@
 package com.byd.gzq.servlet;
 
+import com.byd.gzq.Customer;
 import com.byd.gzq.listener.GlobalListener;
 import com.byd.gzq.utils.CommonUtils;
 import com.byd.gzq.utils.DBUtils;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -11,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.OnMessage;
+import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,13 +23,30 @@ import java.util.Arrays;
 
 
 public class BaseServlet extends HttpServlet{
+    private final Logger log = Logger.getLogger(BaseServlet.class);
 
     protected ApplicationContext ioc;
+    protected boolean available = true;
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){
         doPost(req, resp);
     }
-
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
+        // reentrant lock
+        synchronized (this){
+            while(!available){
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            available = false;
+            process(req, resp);
+
+        }
+    }
+
+    protected synchronized void process(HttpServletRequest req, HttpServletResponse resp){
         if(CommonUtils.isStaticReq(req)){
             try {
 //                resp.sendRedirect("error.html");
@@ -34,6 +56,7 @@ public class BaseServlet extends HttpServlet{
                 e.printStackTrace();
             }
         }
+        log.error(System.getProperty("user.dir"));
         String[] uri = req.getRequestURI().split("/");
         String target = uri[uri.length - 1];
         try {
@@ -53,8 +76,10 @@ public class BaseServlet extends HttpServlet{
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        }finally {
+            available = true;
+            notifyAll();
         }
-
     }
 
     @Override

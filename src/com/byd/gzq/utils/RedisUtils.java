@@ -10,8 +10,8 @@ public class RedisUtils {
     static{
         jpc = new JedisPoolConfig();
         jpc.setMaxIdle(10);
-        String host = "10.6.53.91";
-        int port = 6380;
+        String host = "localhost";
+        int port = 6379;
         jp =  new JedisPool(jpc,host,port);
     }
     public static Jedis getRedisConn(){
