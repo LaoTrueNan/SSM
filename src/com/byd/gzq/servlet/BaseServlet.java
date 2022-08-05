@@ -32,21 +32,21 @@ public class BaseServlet extends HttpServlet{
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp){
         // reentrant lock
-        synchronized (this){
-            while(!available){
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            available = false;
+//        synchronized (this){
+//            while(!available){
+//                try {
+//                    wait();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            available = false;
             process(req, resp);
-
-        }
+//
+//        }
     }
 
-    protected synchronized void process(HttpServletRequest req, HttpServletResponse resp){
+    protected void process(HttpServletRequest req, HttpServletResponse resp){
         if(CommonUtils.isStaticReq(req)){
             try {
 //                resp.sendRedirect("error.html");
@@ -56,7 +56,7 @@ public class BaseServlet extends HttpServlet{
                 e.printStackTrace();
             }
         }
-        log.error(System.getProperty("user.dir"));
+//        log.error(System.getProperty("user.dir"));
         String[] uri = req.getRequestURI().split("/");
         String target = uri[uri.length - 1];
         try {
@@ -76,9 +76,6 @@ public class BaseServlet extends HttpServlet{
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        }finally {
-            available = true;
-            notifyAll();
         }
     }
 

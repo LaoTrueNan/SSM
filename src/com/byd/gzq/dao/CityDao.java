@@ -2,14 +2,11 @@ package com.byd.gzq.dao;
 
 import com.byd.gzq.bean.City;
 import com.byd.gzq.servlet.CityServlet;
+import com.byd.gzq.servlet.MessageServlet;
 import com.byd.gzq.utils.DBUtils;
 import com.byd.gzq.utils.RedisUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
@@ -19,14 +16,14 @@ import java.util.Map;
 
 public class CityDao {
 
-    private static final Logger log = Logger.getLogger("gzq");
+    private static final Logger log = Logger.getLogger(CityDao.class);
 
 
-    private CityServlet cityServlet = null;
-
-    public CityDao(CityServlet cityServlet) {
-        this.cityServlet = cityServlet;
-    }
+//    private MessageServlet messageServlet = null;
+//
+//    public CityDao(MessageServlet messageServlet) {
+//        this.messageServlet = messageServlet;
+//    }
 
     /**
      * before each retrieval, try to query from redis, if not exist, then turn to mysql
@@ -34,14 +31,17 @@ public class CityDao {
      */
 
     public City selectCityById(Integer id) {
-        try {
-            cityServlet.onMessage(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            messageServlet.onMessage(1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         // first,try to retrieve from redis
         Connection conn = null;
+        long startTime = System.currentTimeMillis();
         Jedis mq = RedisUtils.getRedisConn();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        log.info("Got a redis in "+elapsedTime+"ms");
         Map<String, String> cityFieldsMap = mq.hgetAll("city:" + id);
         if(cityFieldsMap!=null&& !cityFieldsMap.isEmpty()){
             log.fatal("redis中找到了，不用通过MySQL进行查询。。。。");
@@ -53,6 +53,8 @@ public class CityDao {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+            }finally {
+                RedisUtils.closeRedisConn(mq);
             }
         }
         PreparedStatement pst =null;
@@ -80,7 +82,6 @@ public class CityDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            RedisUtils.closeRedisConn(mq);
             DBUtils.closeConnection(conn);
         }
         return null;

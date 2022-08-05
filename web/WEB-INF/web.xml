@@ -38,7 +38,16 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>cityServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/retrieveCity</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>messageServlet</servlet-name>
+        <servlet-class>com.byd.gzq.servlet.MessageServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>messageServlet</servlet-name>
+        <url-pattern>/message</url-pattern>
     </servlet-mapping>
     <filter>
         <filter-name>commonFilter</filter-name>

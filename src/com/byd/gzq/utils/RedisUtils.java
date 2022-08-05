@@ -19,6 +19,12 @@ public class RedisUtils {
     }
 
     public static void closeRedisConn(Jedis j){
-
+        // since JedisPool 3.0, use Jedis.close() instead
+        jp.returnResource(j);
     }
+
+    public static void closePool(){
+        jp.destroy();
+    }
+
 }

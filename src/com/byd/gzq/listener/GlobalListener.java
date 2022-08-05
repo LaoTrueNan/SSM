@@ -41,8 +41,8 @@ public class GlobalListener extends ContextLoaderListener{
             throwables.printStackTrace();
         }
         AbandonedConnectionCleanupThread.checkedShutdown();
-//        DBUtils.closeDatasource();
-//        RedisUtils.closeRedisConn(null);
+        DBUtils.closeDatasource();
+        RedisUtils.closePool();
         System.out.println("销毁。。。");
     }
 
