@@ -3,6 +3,7 @@ package com.byd.gzq.utils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class RedisUtils {
     private static JedisPoolConfig jpc;
@@ -14,7 +15,7 @@ public class RedisUtils {
         int port = 6379;
         jp =  new JedisPool(jpc,host,port);
     }
-    public static Jedis getRedisConn(){
+    public static Jedis getRedisConn() throws JedisConnectionException {
         return jp.getResource();
     }
 

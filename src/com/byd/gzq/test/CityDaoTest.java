@@ -1,21 +1,13 @@
 package com.byd.gzq.test;
 
 import com.byd.gzq.bean.City;
-import com.byd.gzq.bean.Person;
-import com.byd.gzq.dao.CityDao;
-import com.byd.gzq.utils.RedisUtils;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import redis.clients.jedis.Jedis;
 
-import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 
 public class CityDaoTest {
 
@@ -32,9 +24,9 @@ public class CityDaoTest {
     @Test
     public void testSpringCity(){
         log.fatal("zhou cong");
-//        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
-//        City city = ioc.getBean("city", City.class);
-//        System.out.println(city);
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
+        City city = ioc.getBean("city", City.class);
+        log.info(city);
     }
 
     @Test
@@ -45,11 +37,11 @@ public class CityDaoTest {
 
     @Test
     public void fetchCity() throws InvocationTargetException, IllegalAccessException {
-        Jedis r = RedisUtils.getRedisConn();
-        Map<String, String> adminPersist = r.hgetAll("city:1");
-        City city = new City();
-        BeanUtils.populate(city,adminPersist);
-        System.out.println(city);
+//        Jedis r = RedisUtils.getRedisConn();
+//        Map<String, String> adminPersist = r.hgetAll("city:1");
+//        City city = new City();
+//        BeanUtils.populate(city,adminPersist);
+//        System.out.println(city);
     }
 
     @After

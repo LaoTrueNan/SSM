@@ -3,13 +3,15 @@ package com.byd.gzq.bean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Component
 public class Person {
     private String name;
 
-    @Autowired
     private City city;
 
-    public Person() {
+    @Autowired
+    public Person(City c) {
+        city = c;
         System.out.println(111);
     }
 
