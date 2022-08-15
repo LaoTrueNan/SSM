@@ -7,11 +7,10 @@ import org.springframework.stereotype.Component;
 public class Person {
     private String name;
 
+    @Autowired
     private City city;
 
-    @Autowired
-    public Person(City c) {
-        city = c;
+    public Person() {
         System.out.println(111);
     }
 

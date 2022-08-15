@@ -12,11 +12,13 @@ public class City {
     private String countryCode;
     private String district;
 
-
+    @Autowired
     private Person person;
     private Integer population;
 
-    @Autowired
+    public City() {
+    }
+
     public City(Person person){
         this.person = person;
     }
