@@ -1,19 +1,20 @@
 package com.byd.gzq.bean;
 
+import com.byd.gzq.utils.GZQ;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
-public class Person {
+import java.io.Serializable;
+
+//@Component
+public class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
+//    @Value("shenzhen")
     private String name;
 
-    @Autowired
-    private City city;
-
     public Person() {
-        System.out.println(111);
     }
-
 
     public Person(String name) {
         this.name = name;
@@ -27,11 +28,10 @@ public class Person {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", city=" + city +
-                '}';
+
+//    @GZQ(value = "注解值")
+    public int calNameLength(){
+        return name.length();
     }
+
 }

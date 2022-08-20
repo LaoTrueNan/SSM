@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
 public class City {
 
     private Integer id;
@@ -12,16 +11,11 @@ public class City {
     private String countryCode;
     private String district;
 
-    @Autowired
-    private Person person;
     private Integer population;
 
     public City() {
     }
 
-    public City(Person person){
-        this.person = person;
-    }
 
     public City(Integer id, String name, String countryCode, String district, Integer population) {
         this.id = id;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Appenders>
+        <!-- File Appender -->
+        <!-- Console Appender -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %highlight{%m%n}{ERROR=red}" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.byd" level="debug" />
+        <Root level="info">
+            <AppenderRef ref="STDOUT" />
+        </Root>
+    </Loggers>
+<!--    since 2.18,here comes the support for 24 colors in highlighting,like:
+ERROR=bg_#5792e6 fg_#eef26b bold -->
+</Configuration>
