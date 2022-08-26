@@ -15,5 +15,7 @@ then turn to mysql(database). But you should realize the function by proxy or ao
 ## log4j
 configuration via properties file is not supported since log4j 2.4\
 ![properties](./images/log4jproperties.png)\
-and support for 24 colors in highlighting was added in 2.18
-![highlight](./images/log4jhighlighting.png)
+and support for 24 colors in highlighting was added in 2.18\
+![highlight](./images/log4jhighlighting.png)\
+before that there's support for several colors specified by apache:\
+![colors](./images/colors.png)

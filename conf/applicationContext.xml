@@ -8,13 +8,49 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <context:annotation-config/>
     <context:component-scan base-package="com.byd.gzq"/>
-    <bean id="person" class="com.byd.gzq.bean.Person">
-        <property name="name" value="Nobody"/>
-    </bean>
+<!--    <bean id="person" class="com.byd.gzq.bean.Person">-->
+<!--        <property name="name" value="Nobody"/>-->
+<!--    </bean>-->
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+
+<!--    <bean id="personFactory" class="com.byd.gzq.utils.PersonFactory">-->
+<!--        <constructor-arg>-->
+<!--            <value>guozhiqiang</value>-->
+<!--        </constructor-arg>-->
+<!--    </bean>-->
+
+<!--    <bean id="person" factory-bean="personFactory" factory-method="getPerson">-->
+
+<!--    </bean>-->
+
+<!--    <bean id="personFactoryBean" class="com.byd.gzq.utils.PersonFactoryBean">-->
+<!--        <constructor-arg>-->
+<!--            <value>hello factory bean</value>-->
+<!--        </constructor-arg>-->
+<!--    </bean>-->
+
+    <bean id="person" class="com.byd.gzq.bean.Person">
+        <replaced-method name="replaced" replacer="replacer"/>
+    </bean>
+
+    <bean id="replacer" class="com.byd.gzq.service.DiyLogger">
+        <property name="init" ref="person"/>
+    </bean>
+
+    <bean id="objectFactoryBean" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+        <property name="targetBeanName">
+            <idref bean="person"/>
+        </property>
+
+    </bean>
+    <bean id="personC" class="com.byd.gzq.bean.PersonC">
+<!--        <lookup-method bean="person" name="getPerson"/>-->
+<!--        <property name="person" ref="person"/>-->
+        <property name="objectFactory" ref="objectFactoryBean"/>
     </bean>
     <aop:aspectj-autoproxy/>
 </beans>

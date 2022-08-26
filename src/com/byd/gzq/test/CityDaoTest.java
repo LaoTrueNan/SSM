@@ -2,6 +2,9 @@ package com.byd.gzq.test;
 
 import com.byd.gzq.bean.City;
 import com.byd.gzq.bean.Person;
+import com.byd.gzq.bean.PersonC;
+import com.byd.gzq.utils.PersonFactory;
+import com.byd.gzq.utils.PersonFactoryBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -70,6 +73,27 @@ public class CityDaoTest {
 
     @Test
     public void afterOperation(){
-        log.error(1);
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
+        Person person = ioc.getBean("person", Person.class);
+        int i = person.calNameLength();
+        log.error(person.replaced());
+    }
+
+    @Test
+    public void testStaticfactory() throws Exception {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
+        Object a1 = ioc.getBean("personFactoryBean");
+        Object a2 = ioc.getBean("&personFactoryBean");
+        System.out.println(a1);
+        System.out.println(a2);
+    }
+
+
+    @Test
+    public void testMethodInjection(){
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
+        PersonC personC = ioc.getBean("personC", PersonC.class);
+        System.out.println(personC.getPerson().getName());
+        System.out.println(personC.getPerson().getName());
     }
 }

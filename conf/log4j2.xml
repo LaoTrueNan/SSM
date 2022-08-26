@@ -4,7 +4,7 @@
         <!-- File Appender -->
         <!-- Console Appender -->
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %highlight{%m%n}{ERROR=red}" />
+            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %highlight{%m%n}{WARN=normal red,ERROR=bright green,FATAL=bright yellow}" />
         </Console>
     </Appenders>
     <Loggers>
