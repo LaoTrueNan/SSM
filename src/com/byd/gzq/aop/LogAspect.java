@@ -3,11 +3,9 @@ package com.byd.gzq.aop;
 import com.byd.gzq.utils.GZQ;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +16,7 @@ import java.io.Serializable;
  * @date 2022/8/17 16:17
  */
 
-//@Aspect
+@Aspect
 @Component
 public class LogAspect implements Serializable {
 
@@ -53,6 +51,12 @@ public class LogAspect implements Serializable {
             throwable.printStackTrace();
         }
         return res;
+    }
+
+    @AfterThrowing(value = "@annotation(c)",throwing = "e")
+    public void doThrow(JoinPoint jp,Component c,Exception e){
+        log.info(jp.getSignature().getName());
+        log.warn(e.getMessage());
     }
 
 }

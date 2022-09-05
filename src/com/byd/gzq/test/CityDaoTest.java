@@ -3,17 +3,16 @@ package com.byd.gzq.test;
 import com.byd.gzq.bean.City;
 import com.byd.gzq.bean.Person;
 import com.byd.gzq.bean.PersonC;
-import com.byd.gzq.utils.PersonFactory;
-import com.byd.gzq.utils.PersonFactoryBean;
+import com.byd.gzq.bean.WithDate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.After;
 import org.junit.Test;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.lang.reflect.InvocationTargetException;
 
 public class CityDaoTest {
@@ -92,8 +91,20 @@ public class CityDaoTest {
     @Test
     public void testMethodInjection(){
         ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
-        PersonC personC = ioc.getBean("personC", PersonC.class);
-        System.out.println(personC.getPerson().getName());
-        System.out.println(personC.getPerson().getName());
+//        PersonC personC = ioc.getBean("personC", PersonC.class);
+//        System.out.println(personC.getPerson().getName());
+//        System.out.println(personC.getPerson().getName());
+
+        Person p = ioc.getBean("person", Person.class);
+        log.warn(p.replaced());
+    }
+
+    @Test
+    public void testPostProcessor(){
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
+        WithDate bean = ioc.getBean("withDate",WithDate.class);
+        WithDate erhousheng = ioc.getBean("erhousheng", WithDate.class);
+        log.info(erhousheng);
+        log.info(bean);
     }
 }

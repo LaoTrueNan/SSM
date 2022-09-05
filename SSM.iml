@@ -36,15 +36,7 @@
           <root url="file://$MODULE_DIR$/web/WEB-INF/lib" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/commons-logging-1.1.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../apache-tomcat-9.0.56/lib/src/commons-dbcp-1.0-src.zip!/commons-dbcp-1.0-src/src/java" />
-          <root url="jar://$MODULE_DIR$/../../apache-tomcat-9.0.56/lib/src/commons-pool-1.0-src.zip!/commons-pool-1.0-src/src/java" />
-          <root url="jar://$MODULE_DIR$/../../backups/springsource/spring-framework-5.3.10/libs/spring-context-5.3.10-sources.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../backups/springsource/spring-framework-5.3.10/libs/spring-context-5.3.10-sources.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../backups/springsource/spring-framework-5.3.10/libs/spring-beans-5.3.10-sources.jar!/" />
-          <root url="jar://$MODULE_DIR$/../../backups/springsource/spring-framework-5.3.10/libs/spring-beans-5.3.10-sources.jar!/" />
-        </SOURCES>
+        <SOURCES />
         <jarDirectory url="file://$MODULE_DIR$/web/WEB-INF/lib" recursive="false" />
       </library>
     </orderEntry>

@@ -14,10 +14,8 @@ import java.lang.reflect.Method;
 
 public class DiyLogger implements MethodReplacer {
 
-    private Object init;
-
-    public void setInit(Object init) {
-        this.init = init;
+    public DiyLogger() {
+        log.info("初始化DiyLogger");
     }
 
     private static final Logger log  = LogManager.getLogger(DiyLogger.class);
@@ -25,6 +23,6 @@ public class DiyLogger implements MethodReplacer {
     public Object reimplement(Object o, Method method, Object[] objects) throws Throwable {
         log.warn("Successfully replaced, entering......");
         log.warn("Successfully replaced, leaving......");
-        return method.invoke(init, objects);
+        return "你被劫持了!";
     }
 }
