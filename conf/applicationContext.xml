@@ -12,6 +12,19 @@
 <!--        <property name="name" value="Nobody"/>-->
 <!--    </bean>-->
 
+    <context:property-placeholder location="classpath:database.properties"/>
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="url" value="${mysql.url}"/>
+        <property name="driverClassName" value="${mysql.driver}"/>
+        <property name="username" value="${mysql.username}"/>
+        <property name="password" value="${mysql.password}"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+    </bean>
+
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/"/>
         <property name="suffix" value=".jsp"/>
@@ -27,13 +40,15 @@
 
 <!--    </bean>-->
 
-    <bean id="personFactoryBean" class="com.byd.gzq.utils.PersonFactoryBean">
-        <constructor-arg>
-            <value>hello factory bean</value>
-        </constructor-arg>
-    </bean>
+<!--    <bean id="personFactoryBean" class="com.byd.gzq.utils.PersonFactoryBean">-->
+<!--&lt;!&ndash;        <constructor-arg>&ndash;&gt;-->
+<!--&lt;!&ndash;            <value>&ndash;&gt;-->
+<!--&lt;!&ndash;                <null></null>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </constructor-arg>&ndash;&gt;-->
+<!--    </bean>-->
 
-    <bean id="person" class="com.byd.gzq.bean.Person">
+    <bean id="person" class="com.byd.gzq.bean.Person" scope="prototype">
 <!--        <replaced-method name="replaced" replacer="replacer"/>-->
     </bean>
 
@@ -41,21 +56,19 @@
 
     </bean>
 
-    <bean id="objectFactoryBean" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
-        <property name="targetBeanName">
-            <idref bean="person"/>
-        </property>
+<!--    <bean id="objectFactoryBean" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">-->
+<!--        <property name="targetBeanName">-->
+<!--            <idref bean="person"/>-->
+<!--        </property>-->
 
-    </bean>
+<!--    </bean>-->
     <bean id="personC" class="com.byd.gzq.bean.PersonC">
 <!--        <lookup-method bean="person" name="getPerson"/>-->
 <!--        <property name="person" ref="person"/>-->
-        <property name="objectFactory" ref="objectFactoryBean"/>
+<!--        <property name="objectFactory" ref="objectFactoryBean"/>-->
     </bean>
     <bean id="withDate" class="com.byd.gzq.bean.WithDate">
-        <property name="date">
-            <value>2039--08--29</value>
-        </property>
+        <property name="date" value="2039--08--29"/>
     </bean>
 
     <bean id="customEditor" class="org.springframework.beans.factory.config.CustomEditorConfigurer">

@@ -4,9 +4,12 @@ import com.byd.gzq.bean.City;
 import com.byd.gzq.bean.Person;
 import com.byd.gzq.bean.PersonC;
 import com.byd.gzq.bean.WithDate;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -17,6 +20,12 @@ import java.lang.reflect.InvocationTargetException;
 
 public class CityDaoTest {
 
+    private ApplicationContext ioc;
+
+    @Before
+    public void setIOC(){
+        ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
+    }
     final static Logger log = LogManager.getLogger(CityDaoTest.class);
 //    @Test
 //    public void testCity(){
@@ -29,7 +38,6 @@ public class CityDaoTest {
     @Test
     public void testSpringCity(){
         log.fatal("zhou cong");
-        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
         City city = ioc.getBean("city", City.class);
         log.info(city);
     }
@@ -72,7 +80,6 @@ public class CityDaoTest {
 
     @Test
     public void afterOperation(){
-        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
         Person person = ioc.getBean("person", Person.class);
         int i = person.calNameLength();
         log.error(person.replaced());
@@ -80,7 +87,6 @@ public class CityDaoTest {
 
     @Test
     public void testStaticfactory() throws Exception {
-        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
         Object a1 = ioc.getBean("personFactoryBean");
         Object a2 = ioc.getBean("&personFactoryBean");
         System.out.println(a1);
@@ -90,7 +96,6 @@ public class CityDaoTest {
 
     @Test
     public void testMethodInjection(){
-        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
 //        PersonC personC = ioc.getBean("personC", PersonC.class);
 //        System.out.println(personC.getPerson().getName());
 //        System.out.println(personC.getPerson().getName());
@@ -101,10 +106,16 @@ public class CityDaoTest {
 
     @Test
     public void testPostProcessor(){
-        ApplicationContext ioc = new ClassPathXmlApplicationContext("applicationContext.xml");
         WithDate bean = ioc.getBean("withDate",WithDate.class);
         WithDate erhousheng = ioc.getBean("erhousheng", WithDate.class);
         log.info(erhousheng);
         log.info(bean);
+    }
+
+    @Test
+    public void testIbatis(){
+        SqlSessionFactoryBean sqlSessionFactory = ioc.getBean("sqlSessionFactory", SqlSessionFactoryBean.class);
+
+
     }
 }

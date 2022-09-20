@@ -11,6 +11,10 @@ import org.springframework.beans.factory.FactoryBean;
 public class PersonFactoryBean implements FactoryBean {
     private String name ;
 
+    public PersonFactoryBean() {
+        this.name="_$#"+(int)(Math.random()*13000000);
+    }
+
     public PersonFactoryBean(String name) {
         this.name = name;
     }

@@ -11,39 +11,39 @@ import org.springframework.beans.factory.config.ServiceLocatorFactoryBean;
  * @date 2022/8/26 16:15
  */
 
-//public class PersonC implements BeanFactoryAware {
-//
-//    private BeanFactory ioc;
-//
-//    @Override
-//    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-//        ioc = beanFactory;
-//    }
-//
-//    private Person person;
-//
-//    public Person getPerson() {
-//        return ioc.getBean("person",Person.class);
-//    }
-//
-//    public void setPerson(Person person) {
-//        this.person = person;
-//    }
-//}
+public class PersonC implements BeanFactoryAware {
 
+    private BeanFactory ioc;
 
-
-public class PersonC{
-    private ObjectFactory<Person> objectFactory;
-
-
-    // 使用ObjectFactoryCreatingFactoryBean的好处是隔离了用户对BeanFactory的直接引用
-//    ServiceLocatorFactoryBean的使用方法和ObjectFactoryCreatingFactoryBean差不多
-    public void setObjectFactory(ObjectFactory<Person> objectFactory) {
-        this.objectFactory = objectFactory;
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        ioc = beanFactory;
     }
+
+    private Person person;
 
     public Person getPerson() {
-        return objectFactory.getObject();
+        return ioc.getBean("person",Person.class);
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 }
+
+
+
+//public class PersonC{
+//    private ObjectFactory<Person> objectFactory;
+//
+//
+//    // 使用ObjectFactoryCreatingFactoryBean的好处是隔离了用户对BeanFactory的直接引用
+////    ServiceLocatorFactoryBean的使用方法和ObjectFactoryCreatingFactoryBean差不多
+//    public void setObjectFactory(ObjectFactory<Person> objectFactory) {
+//        this.objectFactory = objectFactory;
+//    }
+//
+//    public Person getPerson() {
+//        return objectFactory.getObject();
+//    }
+//}
