@@ -4,8 +4,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.byd.gzq.dao.PersonMapper">
-    <select id="selectPersons">
-        select * from gzq
+    <resultMap id="personMap" type="com.byd.gzq.bean.Person">
+        <result property="name" column="name"/>
+        <result property="id" column="id"/>
+        <result property="text" column="text"/>
+        <result property="age" column="age"/>
+    </resultMap>
+    <sql id="selectAllBase">
+        select gzq.name,gzq.id,gzq.text,gzq.age from gzq
+    </sql>
+    <select id="selectPersons" resultMap="personMap">
+        <include refid="selectAllBase"></include>
     </select>
 
+    <select id="selectPersonById" parameterType="int" resultMap="personMap">
+        <include refid="selectAllBase"></include>
+        where gzq.id=#{arg0}
+    </select>
+
+    <insert id="insertPerson" parameterType="com.byd.gzq.bean.Person">
+        insert into gzq (id, name, text, age) values (#{id},#{name},#{text},#{age})
+    </insert>
 </mapper>

@@ -4,6 +4,7 @@ import com.byd.gzq.bean.City;
 import com.byd.gzq.bean.Person;
 import com.byd.gzq.bean.PersonC;
 import com.byd.gzq.bean.WithDate;
+import com.byd.gzq.dao.PersonMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -114,8 +115,18 @@ public class CityDaoTest {
 
     @Test
     public void testIbatis(){
-        SqlSessionFactoryBean sqlSessionFactory = ioc.getBean("sqlSessionFactory", SqlSessionFactoryBean.class);
+        PersonMapper personMapper = ioc.getBean("personMapper", PersonMapper.class);
+        System.out.println(personMapper.selectPersons());
+    }
 
-
+    @Test
+    public void testIbatisInsert(){
+        PersonMapper personMapper = ioc.getBean("personMapper",PersonMapper.class);
+        for (int i = 1; i <= 10000; i++) {
+            String name = "_#$"+(int)(Math.random()*1000000);
+            int age = (int)(Math.random()*100);
+            Person person = new Person(name, i, name, age);
+            personMapper.insertPerson(person);
+        }
     }
 }

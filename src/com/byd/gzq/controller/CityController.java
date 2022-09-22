@@ -2,6 +2,8 @@ package com.byd.gzq.controller;
 
 import com.alibaba.dubbo.common.json.JSON;
 import com.byd.gzq.bean.*;
+import com.byd.gzq.dao.PersonMapper;
+import com.byd.gzq.utils.Exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class CityController {
 
     private final Logger log = LogManager.getLogger(CityController.class);
 
+    @Autowired
+    private PersonMapper mapper;
 
     private Person person;
     @Autowired
@@ -57,11 +61,18 @@ public class CityController {
 //        return "success1";
 //    }
 
+    @GetMapping(value = "getPerson")
+    @ResponseBody
+    public String getPerson(@RequestParam("id") int id){
+        int a= 11/0;
+        Person person = mapper.selectPersonById(id);
+        return person.getName()+"---"+ person.getText();
+    }
 
-    @GetMapping("date")
+    @GetMapping(value = "date")
     @ResponseBody
     public String getDate(){
-        return withDate.toString();
+        return "日期"+withDate.toString();
     }
 
     @PostMapping("newDate")
@@ -72,6 +83,11 @@ public class CityController {
         return a.toString();
     }
 
+    @GetMapping("china")
+    @ResponseBody
+    public String testChinese(@RequestParam("name") String name) throws ServiceException {
+        throw new ServiceException(name,500);
+    }
     @DeleteMapping("delete")
     @ResponseBody
     public String testDel(Person p){
