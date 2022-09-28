@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.json.JSON;
 import com.byd.gzq.bean.*;
 import com.byd.gzq.dao.PersonMapper;
 import com.byd.gzq.utils.Exception.ServiceException;
+import com.rabbitmq.client.Channel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -29,6 +32,9 @@ import java.util.Date;
 public class CityController {
 
     private final Logger log = LogManager.getLogger(CityController.class);
+
+    @Autowired
+    private Channel channel;
 
     @Autowired
     private PersonMapper mapper;
@@ -63,9 +69,13 @@ public class CityController {
 
     @GetMapping(value = "getPerson")
     @ResponseBody
-    public String getPerson(@RequestParam("id") int id){
-        int a= 11/0;
+    public String getPerson(@RequestParam("id") int id,HttpServletRequest req){
         Person person = mapper.selectPersonById(id);
+        try {
+            channel.basicPublish("","ssm",null,person.getName().getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return person.getName()+"---"+ person.getText();
     }
 
@@ -88,15 +98,20 @@ public class CityController {
     public String testChinese(@RequestParam("name") String name) throws ServiceException {
         throw new ServiceException(name,500);
     }
-    @DeleteMapping("delete")
+    @GetMapping("consume")
     @ResponseBody
-    public String testDel(Person p){
-        log.warn(p);
-        return p.getName();
+    public String testDel() throws IOException {
+        String ssm = channel.basicConsume("ssm", true, (a, b) -> {
+            System.out.println(new String(b.getBody(), StandardCharsets.UTF_8));
+        }, a -> {
+        });
+        return ssm;
+
     }
     // solve the property resolving problems via request params
     @InitBinder
-    public void initBinder(WebDataBinder binder){
+    public void initBinder(WebDataBinder binder,HttpServletRequest req){
+        log.warn(req.getRemoteAddr());
         binder.registerCustomEditor(java.util.Date.class,new DatePropertyEditor());
     }
 

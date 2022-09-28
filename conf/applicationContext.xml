@@ -8,13 +8,13 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
                            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-<!--    <mvc:annotation-driven>-->
-<!--        <mvc:message-converters>-->
-<!--            <bean id="converter" class="org.springframework.http.converter.StringHttpMessageConverter">-->
-<!--                <constructor-arg value="UTF-8"/>-->
-<!--            </bean>-->
-<!--        </mvc:message-converters>-->
-<!--    </mvc:annotation-driven>-->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean id="converter" class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
     <context:annotation-config/>
     <context:component-scan base-package="com.byd.gzq"/>
 <!--    <bean id="person" class="com.byd.gzq.bean.Person">-->
@@ -65,9 +65,9 @@
 <!--        <replaced-method name="replaced" replacer="replacer"/>-->
     </bean>
 
-    <bean id="replacer" class="com.byd.gzq.service.DiyLogger">
+<!--    <bean id="replacer" class="com.byd.gzq.service.DiyLogger">-->
 
-    </bean>
+<!--    </bean>-->
 
 <!--    <bean id="objectFactoryBean" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">-->
 <!--        <property name="targetBeanName">-->
