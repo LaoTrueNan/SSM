@@ -2,10 +2,15 @@ package com.byd.gzq.bean;
 
 import com.byd.gzq.utils.GZQ;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 //@Component(value = "person2")
 public class Person implements Serializable {
@@ -46,6 +51,28 @@ public class Person implements Serializable {
         this.id = id;
         this.text = text;
         this.age = age;
+    }
+
+    private void writeObject(ObjectOutputStream o){
+        try {
+            o.write(this.getName().getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readObject(ObjectInputStream o){
+        try {
+            String s = (String) o.readObject();
+            name = s;
+            //            byte[] buf = new byte[1024];
+//            StringBuilder sb = new StringBuilder();
+//            while(o.available()){
+//                o.read();
+//            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public Person() {

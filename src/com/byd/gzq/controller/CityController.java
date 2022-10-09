@@ -102,7 +102,7 @@ public class CityController {
     @ResponseBody
     public String testDel() throws IOException {
         String ssm = channel.basicConsume("ssm", true, (a, b) -> {
-            System.out.println(new String(b.getBody(), StandardCharsets.UTF_8));
+            log.warn(new String(b.getBody(), StandardCharsets.UTF_8));
         }, a -> {
         });
         return ssm;

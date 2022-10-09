@@ -5,7 +5,7 @@ package com.byd.gzq.utils.Exception;
  * @date 2022/9/22 10:18
  */
 
-public class ServiceException extends Exception{
+public class ServiceException extends RuntimeException{
 
     private String message;
     private int code;

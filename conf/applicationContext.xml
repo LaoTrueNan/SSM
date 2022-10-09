@@ -80,24 +80,23 @@
 <!--        <property name="person" ref="person"/>-->
 <!--        <property name="objectFactory" ref="objectFactoryBean"/>-->
     </bean>
-    <bean id="withDate" class="com.byd.gzq.bean.WithDate">
-        <property name="date" value="2039--08--29"/>
-    </bean>
+<!--    <bean id="withDate" class="com.byd.gzq.bean.WithDate">-->
+<!--        <property name="date" value="2039&#45;&#45;08&#45;&#45;29"/>-->
+<!--    </bean>-->
 
-    <bean id="customEditor" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-        <property name="propertyEditorRegistrars">
-            <list>
-                <ref bean="dataPropertyEditorRegistrar"/>
-            </list>
-        </property>
-    </bean>
+<!--    <bean id="customEditor" class="org.springframework.beans.factory.config.CustomEditorConfigurer">-->
+<!--        <property name="propertyEditorRegistrars">-->
+<!--            <list>-->
+<!--                <ref bean="dataPropertyEditorRegistrar"/>-->
+<!--            </list>-->
+<!--        </property>-->
+<!--    </bean>-->
 
-    <bean id="dataPropertyEditorRegistrar" class="com.byd.gzq.bean.DatePropertyEditorRegistry">
-        <property name="pe" ref="datePropertyEditor"/>
-    </bean>
+<!--    <bean id="dataPropertyEditorRegistrar" class="com.byd.gzq.bean.DatePropertyEditorRegistry">-->
+<!--        <property name="pe" ref="datePropertyEditor"/>-->
+<!--    </bean>-->
 
-    <bean id="datePropertyEditor" class="com.byd.gzq.bean.DatePropertyEditor">
+<!--    <bean id="datePropertyEditor" class="com.byd.gzq.bean.DatePropertyEditor"/>-->
 
-    </bean>
     <aop:aspectj-autoproxy/>
 </beans>

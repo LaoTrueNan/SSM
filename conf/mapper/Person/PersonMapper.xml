@@ -14,7 +14,7 @@
         select gzq.name,gzq.id,gzq.text,gzq.age from gzq
     </sql>
     <select id="selectPersons" resultMap="personMap">
-        <include refid="selectAllBase"></include>
+        <include refid="selectAllBase"></include> limit 10
     </select>
 
     <select id="selectPersonById" parameterType="int" resultMap="personMap">

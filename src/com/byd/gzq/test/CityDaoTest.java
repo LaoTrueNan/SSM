@@ -1,10 +1,9 @@
 package com.byd.gzq.test;
 
-import com.byd.gzq.bean.City;
-import com.byd.gzq.bean.Person;
-import com.byd.gzq.bean.PersonC;
-import com.byd.gzq.bean.WithDate;
+import com.alibaba.dubbo.rpc.filter.EchoFilter;
+import com.byd.gzq.bean.*;
 import com.byd.gzq.dao.PersonMapper;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +13,11 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class CityDaoTest {
 
@@ -116,7 +116,9 @@ public class CityDaoTest {
     @Test
     public void testIbatis(){
         PersonMapper personMapper = ioc.getBean("personMapper", PersonMapper.class);
-        System.out.println(personMapper.selectPersons());
+        for (Person p : personMapper.selectPersons()) {
+            System.out.println(p);
+        }
     }
 
     @Test
@@ -128,5 +130,74 @@ public class CityDaoTest {
             Person person = new Person(name, i, name, age);
             personMapper.insertPerson(person);
         }
+    }
+
+
+//    @Test
+//    public void testOOS(){
+//        Person person = ioc.getBean("person", Person.class);
+//        System.out.println(person.getName());
+//        try {
+//            ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("D:\\Person.dat"));
+//            obj.writeObject(person);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    @Test
+//    public void testOIS(){
+//        try {
+//            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\Person.dat"));
+//            Person person = (Person) ois.readObject();
+//            System.out.println(person);
+//        } catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    @Test
+    public void testStudent(){
+        Student stu = new Student();
+        stu.setName("erhousheng");
+        stu.setAge(65);
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("D:\\Person.dat"));
+            oos.writeObject(stu);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testStudentRead(){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("D:\\Person.dat"));
+            Student student = (Student) ois.readObject();
+            System.out.println(student);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void testSqlSessionFactory(){
+        SqlSessionFactory sqlSessionFactory = ioc.getBean(SqlSessionFactory.class);
+        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+            PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
+            Person person = mapper.selectPersonById(1998);
+            System.out.println(person);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testQuotation(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
+        LocalDate parse = LocalDate.parse("1998年04月28日", formatter);
+        log.error(parse);
     }
 }

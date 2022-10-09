@@ -3,6 +3,9 @@ package com.byd.gzq.bean;
 import com.byd.gzq.Customer;
 import org.springframework.beans.PropertyEditorRegistrar;
 import org.springframework.beans.PropertyEditorRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.beans.PropertyEditor;
 import java.util.Date;
@@ -14,23 +17,11 @@ import java.util.Date;
 
 public class DatePropertyEditorRegistry implements PropertyEditorRegistrar {
 
-    private PropertyEditor pe;
-
-    public DatePropertyEditorRegistry() {
-        System.out.println("com.byd.gzq.bean.DatePropertyEditorRegistry loaded...");
-    }
-
+//    private PropertyEditor pe;
+//
     @Override
     public void registerCustomEditors(PropertyEditorRegistry propertyEditorRegistry) {
-        propertyEditorRegistry.registerCustomEditor(java.util.Date.class,getPe());
+//        propertyEditorRegistry.registerCustomEditor(java.util.Date.class,pe);
     }
 
-
-    public PropertyEditor getPe() {
-        return pe;
-    }
-
-    public void setPe(PropertyEditor pe) {
-        this.pe = pe;
-    }
 }
