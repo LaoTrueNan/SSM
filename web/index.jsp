@@ -8,8 +8,6 @@
 <% int i = new Random().nextInt(10); %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="head.jsp"%>
-<a href="retrieveCity?cid=2">到Kabul</a>
-<a href="retrieveCity?cid=1">到Taiyuan</a>
-<a href="retrieveCity?cid=<%=i%>">random</a>
+<a href="city/getPerson?id=<%=i%>">random</a>
 </body>
 </html>

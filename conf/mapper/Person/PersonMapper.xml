@@ -25,4 +25,8 @@
     <insert id="insertPerson" parameterType="com.byd.gzq.bean.Person">
         insert into gzq (id, name, text, age) values (#{id},#{name},#{text},#{age})
     </insert>
+
+    <update id="deletePerson" parameterType="int">
+        update gzq set age=age-1 where id=#{arg0}
+    </update>
 </mapper>

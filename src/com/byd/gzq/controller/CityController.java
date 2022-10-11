@@ -3,6 +3,7 @@ package com.byd.gzq.controller;
 import com.alibaba.dubbo.common.json.JSON;
 import com.byd.gzq.bean.*;
 import com.byd.gzq.dao.PersonMapper;
+import com.byd.gzq.service.PersonService;
 import com.byd.gzq.utils.Exception.ServiceException;
 import com.rabbitmq.client.Channel;
 import org.apache.logging.log4j.LogManager;
@@ -44,6 +45,8 @@ public class CityController {
     @Qualifier(value = "erhousheng")
     private WithDate withDate;
 
+    @Autowired
+    private PersonService personService;
 
     public CityController() {
         // debug info warn error fatal
@@ -68,15 +71,17 @@ public class CityController {
 //    }
 
     @GetMapping(value = "getPerson")
-    @ResponseBody
-    public String getPerson(@RequestParam("id") int id,HttpServletRequest req){
+    public ModelAndView getPerson(@RequestParam("id") int id,HttpServletRequest req){
         Person person = mapper.selectPersonById(id);
         try {
             channel.basicPublish("","ssm",null,person.getName().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return person.getName()+"---"+ person.getText();
+        ModelAndView m = new ModelAndView();
+        m.addObject("person",person);
+        m.setViewName("success");
+        return m;
     }
 
     @GetMapping(value = "date")
@@ -132,4 +137,11 @@ public class CityController {
 //        ssh scp 22
 
 //    }
+
+    @DeleteMapping("delPerson")
+    @ResponseBody
+    public String decreNum(@RequestParam("id") int id){
+        int res = personService.decrePersonNum(id);
+        return res>0?"success":"fail";
+    }
 }

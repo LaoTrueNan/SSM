@@ -13,4 +13,6 @@ public interface PersonMapper {
     List<Person> selectPersons();
     Person selectPersonById(int id);
     int insertPerson(Person person);
+
+    int deletePerson(int id);
 }

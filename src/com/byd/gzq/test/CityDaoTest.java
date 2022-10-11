@@ -3,6 +3,8 @@ package com.byd.gzq.test;
 import com.alibaba.dubbo.rpc.filter.EchoFilter;
 import com.byd.gzq.bean.*;
 import com.byd.gzq.dao.PersonMapper;
+import com.memetix.mst.language.Language;
+import com.memetix.mst.translate.Translate;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +19,8 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 
 public class CityDaoTest {
@@ -194,10 +198,44 @@ public class CityDaoTest {
         }
     }
 
+    /**
+     * test if {@link java.util.ConcurrentModificationException} will be
+     * thrown if remove some element
+     */
+    @Test
+    public void coward(){
+        ArrayList<Integer> integers = new ArrayList<>();
+        integers.add(2);
+        Iterator<Integer> iter = integers.iterator();
+
+        while(iter.hasNext()){
+            Integer value = iter.next();
+            if(value.equals(2)){
+                log.error(value);
+//                integers.remove(value);
+                iter.remove();
+            }
+            System.out.println(value);
+        }
+    }
+
     @Test
     public void testQuotation(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
         LocalDate parse = LocalDate.parse("1998年04月28日", formatter);
+        LocalDate now = LocalDate.now();
+        String format = now.format(formatter);
+        log.error(format);
         log.error(parse);
+    }
+
+    @Test
+    public void translator(){
+        try {
+            String res = Translate.execute("this is not the case", Language.ENGLISH, Language.CHINESE_SIMPLIFIED);
+            System.out.println(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
