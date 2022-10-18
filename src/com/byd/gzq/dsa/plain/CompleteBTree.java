@@ -1,4 +1,4 @@
-package com.byd.gzq.dsa;
+package com.byd.gzq.dsa.plain;
 
 import com.byd.gzq.utils.Exception.ServiceException;
 import com.sun.istack.internal.Nullable;
@@ -12,6 +12,13 @@ import java.util.Arrays;
  */
 
 public class CompleteBTree<T>  implements Serializable {
+
+    // 前序非递归遍历: 单栈
+    // ①访问,判断左儿子
+    // ②存在->右儿子压栈,访问左儿子,到①
+    // ③不存在->栈弹出
+
+
 
     // 存放数据的数组
     private T[] data;

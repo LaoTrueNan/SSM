@@ -3,6 +3,7 @@ package com.byd.gzq.test;
 import com.alibaba.dubbo.rpc.filter.EchoFilter;
 import com.byd.gzq.bean.*;
 import com.byd.gzq.dao.PersonMapper;
+import com.byd.gzq.service.PersonService;
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 import org.apache.ibatis.session.SqlSession;
@@ -237,5 +238,10 @@ public class CityDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void testAop(){
+        PersonService bean = ioc.getBean(PersonService.class);
+        bean.decrePersonNum(10);
     }
 }

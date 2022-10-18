@@ -2,6 +2,7 @@ package com.byd.gzq.service;
 
 import com.byd.gzq.bean.Person;
 import com.byd.gzq.dao.PersonMapper;
+import com.byd.gzq.utils.GZQ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,10 @@ public class PersonService {
         this.personMapper = personMapper;
     }
 
+    @GZQ("计数器")
     public int decrePersonNum(int id){
         Person person = personMapper.selectPersonById(id);
+        int a = 1/0;
         if(person!=null && person.getAge()>0){
             return personMapper.deletePerson(id);
         }

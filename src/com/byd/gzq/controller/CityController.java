@@ -41,9 +41,9 @@ public class CityController {
     private PersonMapper mapper;
 
     private Person person;
-    @Autowired
-    @Qualifier(value = "erhousheng")
-    private WithDate withDate;
+//    @Autowired
+//    @Qualifier(value = "erhousheng")
+//    private WithDate withDate;
 
     @Autowired
     private PersonService personService;
@@ -84,11 +84,11 @@ public class CityController {
         return m;
     }
 
-    @GetMapping(value = "date")
-    @ResponseBody
-    public String getDate(){
-        return "日期"+withDate.toString();
-    }
+//    @GetMapping(value = "date")
+//    @ResponseBody
+//    public String getDate(){
+//        return "日期"+withDate.toString();
+//    }
 
     @PostMapping("newDate")
     @ResponseBody
@@ -106,12 +106,11 @@ public class CityController {
     @GetMapping("consume")
     @ResponseBody
     public String testDel() throws IOException {
-        String ssm = channel.basicConsume("ssm", true, (a, b) -> {
+        String ssm = channel.basicConsume("ssm", false, (a, b) -> {
             log.warn(new String(b.getBody(), StandardCharsets.UTF_8));
         }, a -> {
         });
         return ssm;
-
     }
     // solve the property resolving problems via request params
     @InitBinder

@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
@@ -42,9 +43,13 @@ public class LogAspect implements Serializable {
         log.fatal(a.value());
         MethodSignature signature = (MethodSignature) jpc.getSignature();
         GZQ annotation = signature.getMethod().getAnnotation(GZQ.class);
-        log.warn(a);
-        log.warn(annotation);
         Object res = null;
+        Object[] args = jpc.getArgs();
+        Object var0 = args[0];
+        if(!(var0 instanceof Integer) || (Integer)var0<0){
+            log.fatal("参数为负数,错误!");
+            throw new ArithmeticException("参数为负数,错误!");
+        }
         try {
             res = jpc.proceed(jpc.getArgs());
         } catch (Throwable throwable) {
@@ -53,10 +58,14 @@ public class LogAspect implements Serializable {
         return res;
     }
 
+    @After(value = "@annotation(c)")
+    public void doAfter(JoinPoint jp, GZQ c){
+        log.info("{} 执行结束...",jp.getSignature().getName());
+    }
+
     @AfterThrowing(value = "@annotation(c)",throwing = "e")
-    public void doThrow(JoinPoint jp,Component c,Exception e){
-        log.info(jp.getSignature().getName());
-        log.warn(e.getMessage());
+    public void doThrow(JoinPoint jpc,GZQ c,ArithmeticException e){
+        log.warn("{} 抛出异常",e.getMessage());
     }
 
 }

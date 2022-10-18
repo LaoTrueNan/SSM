@@ -12,7 +12,7 @@ import java.util.Date;
 @Component(value = "erhousheng")
 public class WithDate {
 
-    @Value("2099--09--21")
+    @Value("${date.str}")
     private Date date;
 
     public Date getDate() {
