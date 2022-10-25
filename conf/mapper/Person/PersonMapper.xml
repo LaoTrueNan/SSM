@@ -29,4 +29,9 @@
     <update id="deletePerson" parameterType="int">
         update gzq set age=age-1 where id=#{arg0}
     </update>
+
+    <update id="updatePerson" parameterType="com.byd.gzq.bean.Person">
+        update gzq set name=#{name},text=#{text},age=#{age} where id=#{id}
+    </update>
+
 </mapper>

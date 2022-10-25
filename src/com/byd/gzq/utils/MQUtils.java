@@ -36,5 +36,4 @@ public class MQUtils {
         }
         return null;
     }
-
 }

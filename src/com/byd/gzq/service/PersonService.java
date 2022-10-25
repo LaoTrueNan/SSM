@@ -29,4 +29,8 @@ public class PersonService {
         }
         return 0;
     }
+
+    public int changePersonInfo(Person person){
+        return personMapper.updatePerson(person);
+    }
 }

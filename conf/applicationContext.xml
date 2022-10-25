@@ -17,6 +17,7 @@
     </mvc:annotation-driven>
     <context:annotation-config/>
     <context:component-scan base-package="com.byd.gzq">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 <!--    <bean id="person" class="com.byd.gzq.bean.Person">-->
 <!--        <property name="name" value="Nobody"/>-->

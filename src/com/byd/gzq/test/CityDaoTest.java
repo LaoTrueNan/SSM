@@ -20,9 +20,7 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
+import java.util.*;
 
 public class CityDaoTest {
 
@@ -244,4 +242,15 @@ public class CityDaoTest {
         PersonService bean = ioc.getBean(PersonService.class);
         bean.decrePersonNum(10);
     }
+
+    @Test
+    public void testHasMap(){
+        HashMap<String, String> map = new HashMap<>();
+        map.put("no1", "helloworld");
+        map.put("no2", "newone");
+        for (Map.Entry<String, String> iter : map.entrySet()) {
+            System.out.println(iter.hashCode());
+        }
+    }
+
 }

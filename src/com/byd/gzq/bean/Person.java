@@ -1,10 +1,8 @@
 package com.byd.gzq.bean;
 
 import com.byd.gzq.utils.GZQ;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,8 +10,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 
+
 //@Component(value = "person2")
 public class Person implements Serializable {
+    private final Logger logger = LogManager.getLogger(Person.class);
     private static final long serialVersionUID = 1L;
 //    @Value("shenzhen")
     private String name;
@@ -51,6 +51,7 @@ public class Person implements Serializable {
         this.id = id;
         this.text = text;
         this.age = age;
+        logger.warn("person全参数构造方法被调用");
     }
 
     private void writeObject(ObjectOutputStream o){
@@ -74,15 +75,16 @@ public class Person implements Serializable {
             e.printStackTrace();
         }
     }
-
+//
     public Person() {
-        this("_$#"+(int)(Math.random()*13000000));
+//        this("_$#"+(int)(Math.random()*13000000));
     }
 
     private transient String l;
 
     public Person(String name) {
         this.name = name;
+        logger.warn("person单参数构造方法被调用");
     }
 
     public String getName() {
@@ -103,6 +105,11 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "person's name is "+name;
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", text='" + text + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

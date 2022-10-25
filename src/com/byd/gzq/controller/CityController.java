@@ -6,6 +6,7 @@ import com.byd.gzq.dao.PersonMapper;
 import com.byd.gzq.service.PersonService;
 import com.byd.gzq.utils.Exception.ServiceException;
 import com.rabbitmq.client.Channel;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
@@ -48,6 +50,9 @@ public class CityController {
     @Autowired
     private PersonService personService;
 
+    @Autowired
+    private MQEndpoint mqEndpoint;
+
     public CityController() {
         // debug info warn error fatal
         log.info("CityController has been loaded into IoC container....");
@@ -73,6 +78,8 @@ public class CityController {
     @GetMapping(value = "getPerson")
     public ModelAndView getPerson(@RequestParam("id") int id,HttpServletRequest req){
         Person person = mapper.selectPersonById(id);
+        mqEndpoint.setObj(person);
+        mqEndpoint.messageHandler(1);
         try {
             channel.basicPublish("","ssm",null,person.getName().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
@@ -101,7 +108,8 @@ public class CityController {
     @GetMapping("china")
     @ResponseBody
     public String testChinese(@RequestParam("name") String name) throws ServiceException {
-        throw new ServiceException(name,500);
+        return "中文测试";
+//        throw new ServiceException(name,500);
     }
     @GetMapping("consume")
     @ResponseBody
@@ -136,6 +144,25 @@ public class CityController {
 //        ssh scp 22
 
 //    }
+
+    @PostMapping("/changePersonInfo")
+    @ResponseBody
+    public String changePersonInfo(@ModelAttribute("that") Person person,Model m){
+//        try {
+//            BeanUtils.copyProperties(person,m.getAttribute("that"));
+//        } catch (IllegalAccessException | InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+        int i = personService.changePersonInfo(person);
+        return i>0?"success":"failed";
+    }
+
+    @ModelAttribute
+    public void getPerson(Person person,Model model){
+        log.fatal(person);
+        Person person1 = mapper.selectPersonById(person.getId());
+        model.addAttribute("that",person1);
+    }
 
     @DeleteMapping("delPerson")
     @ResponseBody
