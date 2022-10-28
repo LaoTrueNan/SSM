@@ -13,24 +13,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService {
 
-    private PersonMapper personMapper;
+    private PersonMapper mapper;
 
     @Autowired
     public PersonService(PersonMapper personMapper) {
-        this.personMapper = personMapper;
+        this.mapper = personMapper;
     }
 
     @GZQ("计数器")
     public int decrePersonNum(int id){
-        Person person = personMapper.selectPersonById(id);
-        int a = 1/0;
-        if(person!=null && person.getAge()>0){
-            return personMapper.deletePerson(id);
-        }
-        return 0;
+        return mapper.deletePerson(id);
     }
 
     public int changePersonInfo(Person person){
-        return personMapper.updatePerson(person);
+        return mapper.updatePerson(person);
     }
 }

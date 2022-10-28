@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -15,7 +16,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author Leonard
  * @date 2022/10/25 16:58
  */
-@Component
 @ServerEndpoint("/message")
 public class MQEndpoint {
 
@@ -28,7 +28,7 @@ public class MQEndpoint {
 
     @OnOpen
     public void addClient(Session s){
-        logger.info("some one connect the socket");
+        logger.info("{} connect the socket",s);
         sessions.add(s);
     }
 
@@ -37,6 +37,12 @@ public class MQEndpoint {
         if(l>0 && obj!=null){
             send();
         }
+    }
+
+    @OnClose
+    public void closeHandler(Session session){
+        logger.fatal("{} closed",session);
+        sessions.remove(session);
     }
     public void setObj(Object obj) {
         this.obj = obj;
@@ -50,5 +56,10 @@ public class MQEndpoint {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName()+hashCode();
     }
 }

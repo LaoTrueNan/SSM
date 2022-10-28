@@ -50,10 +50,11 @@ public class CityController {
     @Autowired
     private PersonService personService;
 
-    @Autowired
+
     private MQEndpoint mqEndpoint;
 
     public CityController() {
+        mqEndpoint = new MQEndpoint();
         // debug info warn error fatal
         log.info("CityController has been loaded into IoC container....");
     }
@@ -144,6 +145,9 @@ public class CityController {
 //        ssh scp 22
 
 //    }
+
+//    入参不管是Map还是Model,实现类都是BindingAwareModelMap
+    // 通过Map,Model中获取的类也是同一个
 
     @PostMapping("/changePersonInfo")
     @ResponseBody
